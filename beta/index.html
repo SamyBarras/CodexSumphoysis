@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<script src="scripts/comWs.js"></script>
+<script src="scripts/processing-1.3.6.min.js"></script>
+<script src="scripts/jquery-1.6.1.min.js"></script>
+<style type="text/css">
+canvas {
+	padding-left: 0;
+	margin: 0px auto;
+	border: 1px solid black;
+	width:100%;
+	height:100%;
+}
+body {
+	color:black;
+	background-color:rgb(235,221,189);
+}
+</style>  
+</head>
+<body>
+<center>
+<canvas id="pjs" data-processing-sources="appli/appli.pde appli/init.pde appli/events.pde appli/classes.pde"></canvas>
+</center>
+<a href="http://maudetsamy.com/symphoisis/appli_symphoisis.rar" target="_blank"> Download archive </a>
+<script type="text/javascript">
+/// atention à la perte de focus quand on appuie sur le bouton "home" !!!!
+/// et un peu lourd la recherche de l'instance pjs
+var pjs;
+function play_bubble_sound() {
+		document.getElementById('bubble_sound').play();
+	}
+$(document).ready(function() {
+	getPjsInstance();
+	document.getElementById('bubble_sound').load();
+});
+// obtain a reference to the processing sketch
+function getPjsInstance() {
+	var bound = false;
+	pjs = Processing.getInstanceById('pjs');
+	if(pjs != null)
+		bound = true;
+	if(!bound){
+		setTimeout(getPjsInstance, 250);
+	}
+}
+$(window).resize(function() {	
+	pjs.resizeSketch();
+});
+</script>
+<audio id="bubble_sound" preload="false">
+		<source src="medias/bubble1.ogg" type="audio/ogg">
+		<source src="medias/bubble1.mp3" type="audio/mpeg">
+		Your browser does not support sounds...
+</audio>
+</body>
